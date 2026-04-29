@@ -1,0 +1,26 @@
+# Binaries
+whaletrack
+whaletrack.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test output
+*.test
+*.out
+coverage.txt
+
+# Output files
+*.json
+!go.sum
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
