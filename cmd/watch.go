@@ -19,7 +19,7 @@ func WatchCmd(args []string) error {
 	txType := fs.String("type", "purchases", "Transaction type: purchases, sales, or all")
 	minValue := fs.Float64("min-value", 500000, "Minimum transaction value in USD")
 	interval := fs.Duration("interval", 15*time.Minute, "Time between scans")
-	workers := fs.Int("workers", 20, "Number of concurrent fetch workers")
+	workers := fs.Int("workers", 10, "Number of concurrent fetch workers")
 	outFile := fs.String("out", "", "Output JSON file (overwritten each scan)")
 
 	if err := fs.Parse(args); err != nil {

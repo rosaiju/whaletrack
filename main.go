@@ -51,7 +51,7 @@ Scan flags:
   -type string       Transaction type: purchases, sales, all (default "purchases")
   -min-value float   Minimum transaction value in USD (default 100000)
   -days int          Look back N days (default 30)
-  -workers int       Concurrent fetch workers (default 20)
+  -workers int       Concurrent fetch workers (default 10)
   -cik string        Filter by company CIK
   -out string        Export results to JSON file
 

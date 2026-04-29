@@ -20,7 +20,9 @@ func ScanCmd(args []string) error {
 	txType := fs.String("type", "purchases", "Transaction type: purchases, sales, or all")
 	minValue := fs.Float64("min-value", 100000, "Minimum transaction value in USD")
 	days := fs.Int("days", 30, "Look back N days")
-	workers := fs.Int("workers", 20, "Number of concurrent fetch workers")
+	// 10 workers at 8 req/s rate limit: each request takes ~200-500ms round-trip,
+	// so 10 workers keep the rate limiter saturated without excessive idle goroutines.
+	workers := fs.Int("workers", 10, "Number of concurrent fetch workers")
 	outFile := fs.String("out", "", "Output JSON file path (optional)")
 	cik := fs.String("cik", "", "Filter by company CIK (optional)")
 
