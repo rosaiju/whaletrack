@@ -68,7 +68,7 @@ func WatchCmd(args []string) error {
 					fmt.Printf("\n%d new filing(s) found:\n", len(newFilings))
 					output.PrintTable(os.Stdout, newFilings)
 					if *outFile != "" {
-						output.WriteJSON(*outFile, result.Filings)
+						output.WriteJSON(*outFile, newFilings)
 					}
 				} else {
 					fmt.Fprintf(os.Stderr, "No new filings.\n")
