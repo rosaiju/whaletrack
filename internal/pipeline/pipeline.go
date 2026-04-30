@@ -18,7 +18,7 @@ type Stats struct {
 // Result holds the final output of a pipeline run.
 type Result struct {
 	Filings []*edgar.Filing
-	Stats   Stats
+	Stats   *Stats
 }
 
 // Run orchestrates the full pipeline: index -> fetch -> parse/filter -> collect.
@@ -32,10 +32,10 @@ type Result struct {
 // Context cancellation triggers graceful shutdown at every stage.
 func Run(ctx context.Context, client *edgar.Client, indices []edgar.FilingIndex, opts FilterOpts, workers int, progress func(processed, total int)) (*Result, error) {
 	if len(indices) == 0 {
-		return &Result{}, nil
+		return &Result{Stats: &Stats{}}, nil
 	}
 
-	stats := Stats{FilingsTotal: len(indices)}
+	stats := &Stats{FilingsTotal: len(indices)}
 
 	// Stage 1: Feed filing indices into a channel.
 	indexCh := make(chan edgar.FilingIndex, workers*2)

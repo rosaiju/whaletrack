@@ -30,6 +30,16 @@ func ScanCmd(args []string) error {
 		return err
 	}
 
+	if *days <= 0 {
+		return fmt.Errorf("--days must be positive, got %d", *days)
+	}
+	if *workers <= 0 {
+		return fmt.Errorf("--workers must be positive, got %d", *workers)
+	}
+	if *minValue < 0 {
+		return fmt.Errorf("--min-value cannot be negative, got %.2f", *minValue)
+	}
+
 	// Set up context with signal handling for graceful shutdown.
 	// If the user hits Ctrl+C, context cancellation propagates through
 	// every goroutine in the pipeline, shutting them down cleanly.

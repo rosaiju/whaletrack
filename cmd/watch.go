@@ -26,6 +26,16 @@ func WatchCmd(args []string) error {
 		return err
 	}
 
+	if *workers <= 0 {
+		return fmt.Errorf("--workers must be positive, got %d", *workers)
+	}
+	if *minValue < 0 {
+		return fmt.Errorf("--min-value cannot be negative, got %.2f", *minValue)
+	}
+	if *interval <= 0 {
+		return fmt.Errorf("--interval must be positive, got %v", *interval)
+	}
+
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
@@ -68,7 +78,9 @@ func WatchCmd(args []string) error {
 					fmt.Printf("\n%d new filing(s) found:\n", len(newFilings))
 					output.PrintTable(os.Stdout, newFilings)
 					if *outFile != "" {
-						output.WriteJSON(*outFile, newFilings)
+						if err := output.WriteJSON(*outFile, newFilings); err != nil {
+							fmt.Fprintf(os.Stderr, "Error writing JSON: %v\n", err)
+						}
 					}
 				} else {
 					fmt.Fprintf(os.Stderr, "No new filings.\n")
